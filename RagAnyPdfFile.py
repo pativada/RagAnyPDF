@@ -6,6 +6,7 @@
 # 
 
 import subprocess
+from xml.parsers.expat import model
 
 from openai import api_key
 
@@ -42,11 +43,16 @@ if not os.environ.get("OPENAI_API_KEY") or not os.environ.get("OPENAI_BASE_URL")
         
 # %%
 from langchain_openai import OpenAIEmbeddings
-embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
+#embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
+embeddings = OpenAIEmbeddings(
+    model='text-embedding-ada-002',
+    api_key=os.environ["OPENAI_API_KEY"],   # pulled from Render env var
+    base_url="https://api.openai.com/v1"    # only needed if using a custom/proxy endpoint
+)
 
 # %%
 from langchain_openai import ChatOpenAI
-llm = ChatOpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_BASE_URL"), model="gpt-4o-mini", temperature=0)
+llm = ChatOpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url="https://api.openai.com/v1", model="gpt-4o-mini", temperature=0)
 
 # %%
 import io
