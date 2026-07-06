@@ -7,6 +7,8 @@
 
 import subprocess
 
+from openai import api_key
+
 subprocess.run([
     "pip", "install",
     "langchain==0.3.27",
@@ -44,7 +46,7 @@ embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
 
 # %%
 from langchain_openai import ChatOpenAI
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+llm = ChatOpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_BASE_URL"), model="gpt-4o-mini", temperature=0)
 
 # %%
 import io
