@@ -111,23 +111,23 @@ def RagAnyPdfFile(query, bytes_data, file_name):
     context = "\n\n".join([doc.page_content for doc in relevant_docs])
     
     # 3. Create a prompt for the LLM
-prompt = """You are an advanced, multi-disciplinary Document Analysis Expert. 
-Your primary task is to extract highly accurate, specific, and contextually relevant insights from the provided source document to answer the user's question.
+    prompt = """You are an advanced, multi-disciplinary Document Analysis Expert. 
+    Your primary task is to extract highly accurate, specific, and contextually relevant insights from the provided source document to answer the user's question.
 
-### INSTRUCTIONS:
-1. OBJECTIVITY: Base your answer strictly on the facts directly mentioned in the ###Context section. Do not assume, extrapolate, or bring in outside knowledge.
-2. PRECISION: Directly address the user's question provided in the ###Question section. Ensure the response is precise, concise, and clearly structured.
-3. ABSENCE OF INFORMATION: If the provided ###Context does not contain enough information to fully answer the question, state clearly and neutrally: "I cannot find the answer to this question in the provided document." Do not attempt to guess or invent an answer.
-4. STRUCTURING: Group your findings logically by topics or themes using markdown headings, bullet points, or clear paragraphs to maximize scannability.
+    ### INSTRUCTIONS:
+    1. OBJECTIVITY: Base your answer strictly on the facts directly mentioned in the ###Context section. Do not assume, extrapolate, or bring in outside knowledge.
+    2. PRECISION: Directly address the user's question provided in the ###Question section. Ensure the response is precise, concise, and clearly structured.
+    3. ABSENCE OF INFORMATION: If the provided ###Context does not contain enough information to fully answer the question, state clearly and neutrally: "I cannot find the answer to this question in the provided document." Do not attempt to guess or invent an answer.
+    4. STRUCTURING: Group your findings logically by topics or themes using markdown headings, bullet points, or clear paragraphs to maximize scannability.
 
-### Context:
-{context}
+    ### Context:
+    {context}
 
-### Question:
-{query}
+    ### Question:
+    {query}
 
-### Comprehensive Expert Response:
-"""
+    ### Comprehensive Expert Response:
+    """
 
 
     prompt = prompt.format(context=context, query=query)
