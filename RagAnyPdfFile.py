@@ -30,7 +30,7 @@ if not os.environ.get("OPENAI_API_KEY") or not os.environ.get("OPENAI_BASE_URL")
         with open(file_name, 'r') as file:
             config = json.load(file)
             os.environ['OPENAI_API_KEY'] = config.get("OPENAI_API_KEY") # Loading the API Key
-            os.environ["OPENAI_BASE_URL"] = config.get("OPENAI_API_BASE") # Loading the API Base Url
+            os.environ["OPENAI_BASE_URL"] = config.get("OPENAI_BASE_URL") # Loading the API Base Url
     else:
         # Emergency fallback error if keys are missing in both local and cloud
         raise KeyError(
