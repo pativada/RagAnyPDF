@@ -3,6 +3,7 @@ import streamlit as st
 import requests
 import io
 import os
+import json
 from pypdf import PdfReader
 st.title("Session-based PDF Search")
 
@@ -23,16 +24,22 @@ if st.button("Search"):
         
         with st.spinner("Searching..."):
 
+                file_name = 'config.json'
+                if os.path.exists(file_name):
+                    with open(file_name, 'r') as file:
+                        config = json.load(file)
+                        os.environ['BACKEND_API_URL'] = config.get("BACKEND_API_URL") # Loading the API Key
 
 # Read the variable, or fall back to localhost if it is missing
                 backend_base = os.getenv("BACKEND_API_URL", "http://127.0.0.1:8000")
-
+                print(f"BACKEND_API_URL: {backend_base}")
 # Clean up any missing or extra trailing slashes to prevent "https://onrender.com"
-                backend_base = backend_base.rstrip("/") + "/"
+                backend_base = backend_base.rstrip("/")
+                full_url = f"{backend_base}/uploadfile/"
 
 # Make the request safely
-                response = requests.post(f"{backend_base}uploadfile/", files=files, data=payload)
-                
+                response = requests.post(full_url, files=files, data=payload)
+                print(f"BACKEND_API_URL: {full_url}")
                 if response.status_code == 200:
                     answer = response.json().get("response")
                     st.write("### Agent Response:")
